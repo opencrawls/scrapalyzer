@@ -1,0 +1,93 @@
+{
+  "schema": "scrapalyzer.profile/1",
+  "schema_minor": 0,
+  "target": {
+    "input": "https://shop.northwind.example",
+    "origin": "https://shop.northwind.example",
+    "final_url": "https://shop.northwind.example/en-us/",
+    "site": "northwind.example"
+  },
+  "run": {
+    "id": "01JDQ6V2M8K3",
+    "started_at": "2026-11-23T10:02:09Z",
+    "finished_at": "2026-11-23T10:02:31Z",
+    "tool": { "name": "scrapalyzer", "version": "0.1.0", "signatures": "core-2026.11" },
+    "depth": "standard",
+    "methods": ["http"],
+    "vantage": { "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" },
+    "policy": { "robots": "report", "max_requests": 25, "rate_per_host": 1.0 },
+    "requests": { "sent": 4, "denied": 0 },
+    "analyzers": [
+      { "name": "access", "version": "0.1.0", "status": "ok", "ms": 3 },
+      { "name": "browser", "status": "skipped", "reason": "methods excludes browser" }
+    ]
+  },
+  "summary": {
+    "reachable": { "value": true, "ref": "access:reachable" },
+    "requires_browser": { "value": "no", "basis": "inferred", "confidence": "medium", "ref": "rendering:requires_browser" },
+    "protection": { "value": "edge_present", "ref": ["anti_bot:cloudflare"] },
+    "pagination": { "ref": ["pagination:listing_page_param"] }
+  },
+  "access": {
+    "coverage": { "status": "complete", "surfaces": ["x1", "x2"], "methods": ["http"] },
+    "items": [
+      { "id": "access:reachable", "status": "detected", "basis": "observed", "confidence": "high",
+        "value": { "status": 200 }, "evidence": ["e1"], "analyzer": "access@0.1.0" },
+      { "id": "access:robots", "status": "detected", "basis": "declared", "confidence": "high",
+        "value": { "found": true, "disallow": 14, "allow": 3, "crawl_delay": null, "sitemaps": 1 },
+        "evidence": ["e2"], "analyzer": "access@0.1.0" },
+      { "id": "access:login_required", "status": "not_detected", "evidence": [], "analyzer": "access@0.1.0",
+        "limitations": ["Checked homepage and one listing page only"] }
+    ]
+  },
+  "technologies": {
+    "coverage": { "status": "complete", "surfaces": ["x2"], "methods": ["http"], "signatures_checked": 152 },
+    "items": [
+      { "id": "technologies:shopify", "status": "detected", "basis": "observed", "confidence": "high",
+        "value": { "name": "Shopify", "categories": ["commerce"] }, "evidence": ["e3"], "analyzer": "technologies@0.1.0" }
+    ]
+  },
+  "anti_bot": {
+    "coverage": { "status": "complete", "surfaces": ["x2", "x3"], "methods": ["http"], "signatures_checked": 31,
+                  "limitations": ["Behavioral protections may not show on 4 low-rate requests"] },
+    "items": [
+      { "id": "anti_bot:cloudflare", "status": "detected", "basis": "observed", "confidence": "high",
+        "value": { "vendor": "Cloudflare", "level": "edge_present", "surfaces": ["x2", "x3"] },
+        "evidence": ["e4"], "analyzer": "anti_bot@0.1.0" }
+    ]
+  },
+  "rendering": {
+    "coverage": { "status": "partial", "methods": ["http"], "reason": "browser stage disabled" },
+    "mode": "static",
+    "items": [
+      { "id": "rendering:requires_browser", "status": "detected", "basis": "inferred", "confidence": "medium",
+        "value": "no", "evidence": ["e5"], "analyzer": "rendering@0.1.0",
+        "limitations": ["Inferred from raw HTML only; no rendered comparison"] }
+    ]
+  },
+  "pagination": {
+    "coverage": { "status": "complete", "surfaces": ["x3"], "methods": ["http"] },
+    "items": [
+      { "id": "pagination:listing_page_param", "status": "detected", "basis": "observed", "confidence": "high",
+        "value": { "mechanism": "page", "surface": "html", "parameters": ["page"], "page_size": 24,
+                   "example_next": "/collections/boots?page=2", "requires_js": false },
+        "evidence": ["e6"], "analyzer": "pagination@0.1.0" }
+    ]
+  },
+  "evidence": {
+    "e1": { "exchange": "x2", "location": "header", "key": ":status", "excerpt": "200" },
+    "e2": { "exchange": "x1", "location": "body", "key": "robots.txt", "excerpt": "14 disallow, 3 allow, 1 sitemap" },
+    "e3": { "exchange": "x2", "location": "body", "key": "script[src]", "excerpt": "//cdn.shopify.com/s/files/1/0000/theme.js", "matcher": "sig:shopify/scriptSrc#1" },
+    "e4": { "exchange": "x2", "location": "header", "key": "cf-ray", "excerpt": "cf-ray: 8e00000000000000-AMS", "matcher": "sig:cloudflare/header#1" },
+    "e5": { "exchange": "x2", "location": "body", "key": "visible_text", "excerpt": "18,420 visible text chars, 14 scripts, no empty app root" },
+    "e6": { "exchange": "x3", "location": "dom", "key": "a[rel=next]", "excerpt": "/collections/boots?page=2" }
+  },
+  "exchanges": {
+    "x1": { "purpose": "robots", "url": "https://shop.northwind.example/robots.txt", "status": 200, "ms": 88, "bytes": 1840, "robots": "allowed" },
+    "x2": { "purpose": "homepage", "url": "https://shop.northwind.example/en-us/", "status": 200, "http_version": "HTTP/2", "ms": 412, "bytes": 183220,
+            "content_type": "text/html; charset=utf-8", "headers": { "server": "cloudflare" }, "redirects": ["https://shop.northwind.example/"], "robots": "allowed" },
+    "x3": { "purpose": "sample_listing", "url": "https://shop.northwind.example/collections/boots", "status": 200, "ms": 390, "robots": "allowed" },
+    "x4": { "purpose": "sample_detail", "url": "https://shop.northwind.example/cart", "status": 200, "ms": 120, "robots": "disallowed" }
+  },
+  "errors": []
+}
