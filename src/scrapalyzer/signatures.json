@@ -1,0 +1,94 @@
+{
+  "_format": "Wappalyzer-style subset. Kinds: headers {name-regex: value-regex}, cookies [name-regex], scriptSrc [regex], html [regex], meta {name: value-regex}, status [int]. All regexes are case-insensitive. Every entry needs a positive and a negative test.",
+  "technologies": {
+    "Next.js": {"cats": ["framework"], "headers": {"x-powered-by": "Next\\.js"}, "html": ["<script id=\"__NEXT_DATA__\"", "self\\.__next_f\\.push"], "scriptSrc": ["/_next/static/"], "implies": ["React"],
+                "hint": "Page data is usually in __NEXT_DATA__ or the RSC payload; /_next/data/{buildId}/{path}.json serves it as JSON on pages-router sites"},
+    "Nuxt": {"cats": ["framework"], "html": ["window\\.__NUXT__", "<script[^>]+id=\"__NUXT_DATA__\""], "scriptSrc": ["/_nuxt/"], "implies": ["Vue.js"],
+             "hint": "Page data is usually in the __NUXT__ / __NUXT_DATA__ payload"},
+    "Gatsby": {"cats": ["framework"], "html": ["<div id=\"___gatsby\""], "meta": {"generator": "^Gatsby"}, "implies": ["React"],
+               "hint": "Static pages; /page-data/{path}/page-data.json carries page data"},
+    "SvelteKit": {"cats": ["framework"], "html": ["data-sveltekit-", "__sveltekit_"],
+                  "hint": "Server load data is usually inlined; {path}/__data.json may serve it"},
+    "Astro": {"cats": ["framework"], "html": ["<astro-island"], "meta": {"generator": "^Astro"}},
+    "Angular": {"cats": ["framework"], "html": ["ng-version=\""]},
+    "React": {"cats": ["js-library"], "html": ["data-reactroot"], "scriptSrc": ["react(-dom)?(\\.production)?(\\.min)?\\.js"]},
+    "Vue.js": {"cats": ["js-library"], "html": ["data-v-[0-9a-f]{8}"], "scriptSrc": ["vue(\\.runtime)?(\\.global)?(\\.prod)?(\\.min)?\\.js"]},
+    "Apollo GraphQL": {"cats": ["api"], "html": ["__APOLLO_STATE__"], "hint": "A GraphQL endpoint (often /graphql) backs the page"},
+    "Shopify": {"cats": ["commerce"], "headers": {"x-shopid": "", "x-shopify-stage": ""}, "cookies": ["^_shopify_y$", "^_shopify_s$"], "scriptSrc": ["cdn\\.shopify\\.com"], "html": ["Shopify\\.theme"],
+                "hint": "/products.json and /collections/{handle}/products.json are common platform endpoints"},
+    "WooCommerce": {"cats": ["commerce"], "html": ["woocommerce-"], "scriptSrc": ["/wp-content/plugins/woocommerce/"], "implies": ["WordPress"],
+                    "hint": "/wp-json/wc/store/v1/products is the platform's public Store API"},
+    "Magento": {"cats": ["commerce"], "cookies": ["^X-Magento-Vary$"], "html": ["Magento_", "mage/cookies"], "scriptSrc": ["/static/version\\d+/frontend/"],
+                "hint": "/graphql and /rest/V1/ are the platform's APIs"},
+    "BigCommerce": {"cats": ["commerce"], "scriptSrc": ["cdn\\d*\\.bigcommerce\\.com"], "html": ["data-stencil-"],
+                    "hint": "The storefront GraphQL API is at /graphql"},
+    "Salesforce Commerce Cloud": {"cats": ["commerce"], "cookies": ["^dwsid$", "^dwanonymous_"], "html": ["/on/demandware\\.store/", "/on/demandware\\.static/"],
+                                  "hint": "Listing grids usually load from /on/demandware.store/.../Search-UpdateGrid"},
+    "WordPress": {"cats": ["cms"], "html": ["/wp-content/", "/wp-includes/"], "meta": {"generator": "^WordPress"}, "headers": {"link": "rel=\"https://api\\.w\\.org/\""},
+                  "hint": "/wp-json/wp/v2/posts is the REST API, often public"},
+    "Drupal": {"cats": ["cms"], "headers": {"x-generator": "Drupal", "x-drupal-cache": ""}, "meta": {"generator": "^Drupal"}, "html": ["drupal-settings-json"],
+               "hint": "/jsonapi is the core JSON:API module, when enabled"},
+    "Ghost": {"cats": ["cms"], "meta": {"generator": "^Ghost"}, "hint": "/ghost/api/content/ is the Content API (needs the site's public key)"},
+    "Squarespace": {"cats": ["cms"], "html": ["static1\\.squarespace\\.com", "Static\\.SQUARESPACE_CONTEXT"], "hint": "Adding ?format=json to most pages returns JSON"},
+    "Wix": {"cats": ["cms"], "headers": {"x-wix-request-id": ""}, "html": ["static\\.wixstatic\\.com"], "meta": {"generator": "^Wix"}},
+    "Webflow": {"cats": ["cms"], "html": ["data-wf-site=\""], "meta": {"generator": "^Webflow"}},
+    "Algolia": {"cats": ["search"], "scriptSrc": ["algoliasearch", "cdn\\.jsdelivr\\.net/npm/algoliasearch"], "html": ["\\.algolia\\.net", "\\.algolianet\\.com"],
+                "hint": "Search queries go to Algolia's API from the browser"},
+    "ASP.NET": {"cats": ["server"], "headers": {"x-aspnet-version": "", "x-powered-by": "ASP\\.NET"}, "cookies": ["^ASP\\.NET_SessionId$"], "html": ["name=\"__VIEWSTATE\""]},
+    "PHP": {"cats": ["server"], "headers": {"x-powered-by": "PHP"}, "cookies": ["^PHPSESSID$"]},
+    "Express": {"cats": ["server"], "headers": {"x-powered-by": "^Express$"}}
+  },
+  "anti_bot": {
+    "Cloudflare": {
+      "edge_present": {"headers": {"cf-ray": "", "server": "^cloudflare$"}},
+      "bot_management_signal": {"cookies": ["^__cf_bm$", "^cf_clearance$"]},
+      "challenge_observed": {"headers": {"cf-mitigated": "challenge"}, "html": ["/cdn-cgi/challenge-platform/h/", "<title>Just a moment\\.\\.\\.</title>"]}
+    },
+    "Akamai": {
+      "edge_present": {"headers": {"x-akamai-[a-z-]+": "", "akamai-grn": "", "server": "^AkamaiGHost"}},
+      "bot_management_signal": {"cookies": ["^_abck$", "^bm_sz$", "^ak_bmsc$", "^bm_sv$"]},
+      "challenge_observed": {"html": ["<title>Access Denied</title>[\\s\\S]{0,400}errors\\.edgesuite\\.net"]}
+    },
+    "DataDome": {
+      "bot_management_signal": {"cookies": ["^datadome$"], "headers": {"x-datadome(-[a-z]+)?": ""}, "scriptSrc": ["js\\.datadome\\.co"]},
+      "challenge_observed": {"html": ["geo\\.captcha-delivery\\.com", "ct\\.captcha-delivery\\.com"]}
+    },
+    "HUMAN (PerimeterX)": {
+      "bot_management_signal": {"cookies": ["^_px(hd|vid|cvid|\\d)?$", "^_pxff_"], "scriptSrc": ["client\\.perimeterx\\.net", "/px/client/main\\.min\\.js"]},
+      "challenge_observed": {"html": ["id=\"px-captcha\"", "captcha\\.px-cdn\\.net"]}
+    },
+    "Imperva": {
+      "edge_present": {"headers": {"x-iinfo": "", "x-cdn": "^Imperva"}},
+      "bot_management_signal": {"cookies": ["^incap_ses_", "^visid_incap_", "^reese84$", "^nlbi_"]},
+      "challenge_observed": {"html": ["_Incapsula_Resource", "Request unsuccessful\\. Incapsula incident ID"]}
+    },
+    "Kasada": {
+      "bot_management_signal": {"headers": {"x-kpsdk-[a-z]+": ""}, "scriptSrc": ["/ips\\.js\\?", "/149e9513-01fa-4fb0-aad4-566afd725d1b/"]},
+      "challenge_observed": {"status": [429], "headers": {"x-kpsdk-ct": ""}}
+    },
+    "AWS WAF": {
+      "bot_management_signal": {"cookies": ["^aws-waf-token$"], "scriptSrc": ["\\.token\\.awswaf\\.com", "\\.captcha\\.awswaf\\.com"]},
+      "challenge_observed": {"html": ["AwsWafIntegration", "awsWafCookieDomainList"]}
+    },
+    "Queue-it": {
+      "bot_management_signal": {"scriptSrc": ["static\\.queue-it\\.net"], "cookies": ["^QueueITAccepted-"]},
+      "challenge_observed": {"html": ["queue-it\\.net/\\?c="]}
+    },
+    "Google reCAPTCHA": {"challenge_observed": {"scriptSrc": ["google\\.com/recaptcha/(api|enterprise)\\.js", "recaptcha\\.net/recaptcha/"], "html": ["class=\"g-recaptcha\""]}},
+    "hCaptcha": {"challenge_observed": {"scriptSrc": ["(js\\.)?hcaptcha\\.com/1/api\\.js"], "html": ["class=\"h-captcha\""]}},
+    "Cloudflare Turnstile": {"challenge_observed": {"scriptSrc": ["challenges\\.cloudflare\\.com/turnstile/"], "html": ["class=\"cf-turnstile\""]}},
+    "Arkose Labs": {"challenge_observed": {"scriptSrc": ["arkoselabs\\.com", "funcaptcha\\.com"]}}
+  },
+  "cdn": {
+    "Cloudflare": {"headers": {"cf-ray": "", "server": "^cloudflare$"}},
+    "Fastly": {"headers": {"x-served-by": "cache-[a-z0-9]+-[A-Z]{3}", "x-fastly(-[a-z-]+)?": "", "fastly-debug-digest": ""}},
+    "Akamai": {"headers": {"x-akamai-[a-z-]+": "", "akamai-grn": "", "server": "^AkamaiGHost"}},
+    "Amazon CloudFront": {"headers": {"x-amz-cf-id": "", "x-amz-cf-pop": "", "via": "CloudFront"}},
+    "Google Cloud CDN": {"headers": {"via": "1\\.1 google"}},
+    "Microsoft Azure Front Door": {"headers": {"x-azure-ref": ""}},
+    "Vercel": {"headers": {"x-vercel-id": "", "server": "^Vercel$"}},
+    "Netlify": {"headers": {"x-nf-request-id": "", "server": "^Netlify$"}},
+    "Imperva": {"headers": {"x-iinfo": "", "x-cdn": "^Imperva"}},
+    "Varnish": {"headers": {"via": "varnish", "x-varnish": ""}}
+  }
+}
