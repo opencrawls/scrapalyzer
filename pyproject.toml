@@ -1,0 +1,28 @@
+[project]
+name = "scrapalyzer"
+version = "0.1.0.dev0"
+description = "Profile how a website exposes its data: APIs, pagination, rendering, structured data, protection. By OpenCrawls."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{ name = "OpenCrawls", email = "contact@opencrawls.com" }]
+dependencies = [
+    "httpx>=0.27,<1",
+    "protego>=0.3",
+    "pydantic>=2.7,<3",
+]
+
+[project.urls]
+Homepage = "https://opencrawls.com/targets"
+Source = "https://github.com/opencrawls/scrapalyzer"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

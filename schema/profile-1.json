@@ -1,0 +1,1149 @@
+{
+  "$defs": {
+    "AnalyzerRun": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "partial",
+            "skipped",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ms"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ],
+      "title": "AnalyzerRun",
+      "type": "object"
+    },
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "not_checked",
+          "enum": [
+            "complete",
+            "partial",
+            "skipped",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "surfaces": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Surfaces",
+          "type": "array"
+        },
+        "methods": {
+          "default": [],
+          "items": {
+            "enum": [
+              "http",
+              "browser",
+              "extension",
+              "archive",
+              "import"
+            ],
+            "type": "string"
+          },
+          "title": "Methods",
+          "type": "array"
+        },
+        "signatures_checked": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signatures Checked"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "limitations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "title": "Coverage",
+      "type": "object"
+    },
+    "Error": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "analyzer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Analyzer"
+        },
+        "type": {
+          "enum": [
+            "timeout",
+            "dns",
+            "tls",
+            "http",
+            "parse",
+            "budget",
+            "policy",
+            "internal"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "affects": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Affects",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "stage",
+        "type",
+        "message"
+      ],
+      "title": "Error",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "exchange": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exchange"
+        },
+        "location": {
+          "enum": [
+            "header",
+            "cookie_name",
+            "body",
+            "url",
+            "dom",
+            "network",
+            "tls",
+            "dns",
+            "archive"
+          ],
+          "title": "Location",
+          "type": "string"
+        },
+        "key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Key"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "matcher": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Matcher"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed At"
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Exchange": {
+      "additionalProperties": false,
+      "properties": {
+        "purpose": {
+          "title": "Purpose",
+          "type": "string"
+        },
+        "method": {
+          "default": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "http_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Http Version"
+        },
+        "ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ms"
+        },
+        "bytes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bytes"
+        },
+        "content_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Type"
+        },
+        "headers": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Headers",
+          "type": "object"
+        },
+        "set_cookie_names": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Set Cookie Names",
+          "type": "array"
+        },
+        "redirects": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Redirects",
+          "type": "array"
+        },
+        "body_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Body Sha256"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "At"
+        },
+        "via": {
+          "default": "http",
+          "enum": [
+            "http",
+            "browser",
+            "extension",
+            "import"
+          ],
+          "title": "Via",
+          "type": "string"
+        },
+        "robots": {
+          "default": "unknown",
+          "enum": [
+            "allowed",
+            "disallowed",
+            "unknown"
+          ],
+          "title": "Robots",
+          "type": "string"
+        },
+        "policy": {
+          "default": "sent",
+          "enum": [
+            "sent",
+            "denied:robots",
+            "denied:budget",
+            "denied:scope"
+          ],
+          "title": "Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "purpose",
+        "url"
+      ],
+      "title": "Exchange",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z_]+:[a-z0-9_.-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "detected",
+            "not_detected",
+            "unknown",
+            "not_checked",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "enum": [
+                "declared",
+                "observed",
+                "inferred"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Basis"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "value": {
+          "default": null,
+          "title": "Value"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "analyzer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Analyzer"
+        },
+        "limitations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "status"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "Policy": {
+      "additionalProperties": false,
+      "properties": {
+        "robots": {
+          "default": "report",
+          "enum": [
+            "report",
+            "respect"
+          ],
+          "title": "Robots",
+          "type": "string"
+        },
+        "max_requests": {
+          "title": "Max Requests",
+          "type": "integer"
+        },
+        "rate_per_host": {
+          "title": "Rate Per Host",
+          "type": "number"
+        }
+      },
+      "required": [
+        "max_requests",
+        "rate_per_host"
+      ],
+      "title": "Policy",
+      "type": "object"
+    },
+    "RenderingSection": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/Coverage",
+          "default": {
+            "status": "not_checked",
+            "surfaces": [],
+            "methods": [],
+            "signatures_checked": null,
+            "reason": null,
+            "limitations": []
+          }
+        },
+        "items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "static",
+                "ssr_hydrated",
+                "csr",
+                "unknown"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mode"
+        }
+      },
+      "title": "RenderingSection",
+      "type": "object"
+    },
+    "Requests": {
+      "additionalProperties": false,
+      "properties": {
+        "sent": {
+          "default": 0,
+          "title": "Sent",
+          "type": "integer"
+        },
+        "denied": {
+          "default": 0,
+          "title": "Denied",
+          "type": "integer"
+        }
+      },
+      "title": "Requests",
+      "type": "object"
+    },
+    "Run": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "string"
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        },
+        "tool": {
+          "$ref": "#/$defs/Tool"
+        },
+        "depth": {
+          "default": "standard",
+          "enum": [
+            "quick",
+            "standard",
+            "deep"
+          ],
+          "title": "Depth",
+          "type": "string"
+        },
+        "methods": {
+          "default": [
+            "http"
+          ],
+          "items": {
+            "enum": [
+              "http",
+              "browser",
+              "extension",
+              "archive",
+              "import"
+            ],
+            "type": "string"
+          },
+          "title": "Methods",
+          "type": "array"
+        },
+        "vantage": {
+          "$ref": "#/$defs/Vantage"
+        },
+        "policy": {
+          "$ref": "#/$defs/Policy"
+        },
+        "requests": {
+          "$ref": "#/$defs/Requests",
+          "default": {
+            "sent": 0,
+            "denied": 0
+          }
+        },
+        "analyzers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AnalyzerRun"
+          },
+          "title": "Analyzers",
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/Source",
+          "default": {
+            "kind": "live",
+            "target_id": null,
+            "url": null,
+            "fetched_at": null
+          }
+        }
+      },
+      "required": [
+        "id",
+        "started_at",
+        "tool",
+        "vantage",
+        "policy"
+      ],
+      "title": "Run",
+      "type": "object"
+    },
+    "Section": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/Coverage",
+          "default": {
+            "status": "not_checked",
+            "surfaces": [],
+            "methods": [],
+            "signatures_checked": null,
+            "reason": null,
+            "limitations": []
+          }
+        },
+        "items": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "title": "Section",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "live",
+          "enum": [
+            "live",
+            "opencrawls"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Id"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "fetched_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fetched At"
+        }
+      },
+      "title": "Source",
+      "type": "object"
+    },
+    "Target": {
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "title": "Input",
+          "type": "string"
+        },
+        "origin": {
+          "title": "Origin",
+          "type": "string"
+        },
+        "final_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Final Url"
+        },
+        "site": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Site"
+        }
+      },
+      "required": [
+        "input",
+        "origin"
+      ],
+      "title": "Target",
+      "type": "object"
+    },
+    "Tool": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "scrapalyzer",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "signatures": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signatures"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "title": "Tool",
+      "type": "object"
+    },
+    "Vantage": {
+      "additionalProperties": false,
+      "properties": {
+        "user_agent": {
+          "title": "User Agent",
+          "type": "string"
+        },
+        "proxy": {
+          "default": false,
+          "title": "Proxy",
+          "type": "boolean"
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Region"
+        },
+        "client": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Client"
+        },
+        "session": {
+          "default": "signed_out",
+          "enum": [
+            "signed_out",
+            "signed_in"
+          ],
+          "title": "Session",
+          "type": "string"
+        },
+        "user_driven": {
+          "default": false,
+          "title": "User Driven",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "user_agent"
+      ],
+      "title": "Vantage",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "scrapalyzer.profile/1",
+      "default": "scrapalyzer.profile/1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "schema_minor": {
+      "default": 0,
+      "title": "Schema Minor",
+      "type": "integer"
+    },
+    "target": {
+      "$ref": "#/$defs/Target"
+    },
+    "run": {
+      "$ref": "#/$defs/Run"
+    },
+    "summary": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Summary",
+      "type": "object"
+    },
+    "access": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "technologies": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "anti_bot": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "rendering": {
+      "$ref": "#/$defs/RenderingSection",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": [],
+        "mode": null
+      }
+    },
+    "structured_data": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "discovery": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "endpoints": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "pagination": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "data_inventory": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "infrastructure": {
+      "$ref": "#/$defs/Section",
+      "default": {
+        "coverage": {
+          "limitations": [],
+          "methods": [],
+          "reason": null,
+          "signatures_checked": null,
+          "status": "not_checked",
+          "surfaces": []
+        },
+        "items": []
+      }
+    },
+    "evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "default": {},
+      "title": "Evidence",
+      "type": "object"
+    },
+    "exchanges": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Exchange"
+      },
+      "default": {},
+      "title": "Exchanges",
+      "type": "object"
+    },
+    "errors": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Error"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "extensions": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Extensions",
+      "type": "object"
+    }
+  },
+  "required": [
+    "target",
+    "run"
+  ],
+  "title": "scrapalyzer.profile/1",
+  "type": "object",
+  "$id": "https://github.com/opencrawls/scrapalyzer/blob/main/schema/profile-1.json"
+}
