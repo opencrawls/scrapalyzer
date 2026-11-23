@@ -12,6 +12,9 @@ dependencies = [
     "pydantic>=2.7,<3",
 ]
 
+[project.scripts]
+scrapalyzer = "scrapalyzer.cli:main"
+
 [project.urls]
 Homepage = "https://opencrawls.com/targets"
 Source = "https://github.com/opencrawls/scrapalyzer"

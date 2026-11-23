@@ -1,4 +1,5 @@
 """Regenerate schema/profile-1.json from the models. tests/test_models.py fails when it is out of date."""
+import sys, pathlib; sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))  # works even if iCloud hides the venv .pth
 import json
 from pathlib import Path
 
